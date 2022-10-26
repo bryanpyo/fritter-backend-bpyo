@@ -8,9 +8,6 @@ export type Fame = {
   fame_num: number;
 };
 
-// Mongoose schema definition for interfacing with a MongoDB table
-// Freets stored in this table will have these fields, with the
-// type given by the type property, inside MongoDB
 const FameSchema = new Schema<Fame>({
   // The author userId
   user: {

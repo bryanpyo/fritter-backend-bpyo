@@ -60,7 +60,7 @@ router.get(
  * @throws {413} - If the fcommentreet content is more than 140 characters long
  */
 router.post(
-  '/',
+  '/:originalId',
   [
     userValidator.isUserLoggedIn
     // commentValidator.isValidCommentContent
@@ -68,7 +68,7 @@ router.post(
   async (req: Request, res: Response) => {
     // console.log("sdlfjalljfk");
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const originalId = "hello";
+    const originalId = (req.params.originalId as string) ?? '';
     const comment = await CommentCollection.addOne(userId, originalId, req.body.content);
 
     res.status(201).json({
