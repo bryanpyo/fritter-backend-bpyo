@@ -11,7 +11,7 @@ class CommentCollection {
    * @param {string} content - The id of the content of the comment
    * @return {Promise<HydratedDocument<Comment>>} - The newly created comment
    */
-  static async addOne(authorId: Types.ObjectId | string, originalId: string, content: string): Promise<HydratedDocument<Comment>> {
+  static async addOne(authorId: Types.ObjectId | string, originalId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Comment>> {
     const date = new Date();
     const comment = new CommentModel({
       authorId,

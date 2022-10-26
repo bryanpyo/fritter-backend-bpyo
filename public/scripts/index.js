@@ -1,5 +1,3 @@
-const { createJsxFragment } = require("typescript");
-
 // Show an object on the screen.
 function showObject(obj) {
   const pre = document.getElementById('response');
@@ -42,8 +40,8 @@ const formsAndHandlers = {
   'edit-freet': editFreet,
   'delete-freet': deleteFreet,
   'create-comment': createComment,
-  'create-fame': createFame,
-  'get-fame': getFame
+  'update-fame': updateFame,
+  'like-freet': likeFreet
 };
 
 // Attach handlers to forms

@@ -5,34 +5,16 @@
  * e.g. for createUser, fields has properites 'username' and 'password'
  */
 
- function viewAllComments(fields) {
-    fetch('/api/comments')
-      .then(showResponse)
-      .catch(showResponse);
-  }
+//  function viewAllComments(fields) {
+//     fetch('/api/comments')
+//       .then(showResponse)
+//       .catch(showResponse);
+//   }
   
-  function viewCommentsByAuthor(fields) {
-    fetch(`/api/comments?author=${fields.author}`)
-      .then(showResponse)
-      .catch(showResponse);
-  }
-  
-  function createComment(fields) {
+function createComment(fields) {
     console.log(fields);
     fetch('/api/comments', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
-      .then(showResponse)
-      .catch(showResponse);
-  }
-  
-  function editComment(fields) {
-    fetch(`/api/comments/${fields.id}`, {method: 'PUT', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
-      .then(showResponse)
-      .catch(showResponse);
-  }
-  
-  function deleteComment(fields) {
-    fetch(`/api/comments/${fields.id}`, {method: 'DELETE'})
-      .then(showResponse)
-      .catch(showResponse);
-  }
+        .then(showResponse)
+        .catch(showResponse);
+}
   

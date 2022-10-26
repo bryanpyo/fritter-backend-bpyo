@@ -11,6 +11,7 @@ import type {User} from '../user/model';
 export type Comment = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: Types.ObjectId;
+  originalId: Types.ObjectId;
   dateCreated: Date;
   content: string;
   dateModified: Date;
@@ -19,6 +20,7 @@ export type Comment = {
 export type PopulatedComment = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
   authorId: User;
+  originalId: Types.ObjectId;
   dateCreated: Date;
   content: string;
   dateModified: Date;
@@ -34,6 +36,10 @@ const CommentSchema = new Schema<Comment>({
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'User'
+  },
+  originalId: {
+    type: Schema.Types.ObjectId,
+    required: true
   },
   // The date the comment was created
   dateCreated: {
