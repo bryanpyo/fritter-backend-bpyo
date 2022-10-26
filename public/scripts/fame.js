@@ -7,7 +7,7 @@
 
 function updateFame(fields){
     console.log(fields)
-    fetch('/api/fame?newFame = ${fields.newFame}', {method: 'PUT', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+    fetch(`/api/fame?newFame = ${fields.newFame}`, {method: 'PUT', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
         .then(showResponse)
         .catch(showResponse);
 }
