@@ -41,7 +41,8 @@ const formsAndHandlers = {
   'delete-freet': deleteFreet,
   'create-comment': createComment,
   'update-fame': updateFame,
-  'like-freet': likeFreet
+  'like-freet': likeFreet,
+  'create-fame': createFame
 };
 
 // Attach handlers to forms

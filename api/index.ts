@@ -79,8 +79,8 @@ app.get('/', (req: Request, res: Response) => {
 // Add routers from routes folder
 app.use('/api/users', userRouter);
 app.use('/api/freets', freetRouter);
-app.use('./api/comments', commentRouter);
-app.use('./api/fame', fameRouter);
+app.use('/api/comments', commentRouter);
+app.use('/api/fame', fameRouter);
 app.use('/api/likes', likeRouter);
 
 // Catch all the other routes and display error message

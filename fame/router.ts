@@ -115,13 +115,24 @@ const router = express.Router();
  * @throws {413} - If the freet content is more than 140 characters long
  */
 router.put(
-  '/:newFame?',
+  '/:userId',
   [],
   async (req: Request, res: Response) => {
     const user = await UserCollection.findOneByUsername(req.query.username as string); 
-    const update = await FameCollection.updateOne(user._id, req.params.newFame as unknown as number);
+    await FameCollection.updateOne(req.params.userId, req.body.newFame as unknown as number);
     res.status(200).json({
       message: 'Your fame was updated successfully.',
+    });
+  }
+);
+
+router.post(
+  '/:userId',
+  [],
+  async (req: Request, res: Response) => {
+    await FameCollection.addOne(req.params.userId);
+    res.status(201).json({
+      message: 'Your fame was created successfully.'
     });
   }
 );

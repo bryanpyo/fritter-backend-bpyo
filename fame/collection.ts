@@ -5,12 +5,31 @@ import UserCollection from '../user/collection';
 
 
 class FameCollection {
-  static async updateOne(fameId: Types.ObjectId | string, newFame: number): Promise<HydratedDocument<Fame>> {
-    const fame = await FameModel.findOne({_id: fameId});
+  // static async updateOne(userId: Types.ObjectId | string, newFame: number): Promise<HydratedDocument<Fame>> {
+  //   const fame = await FameModel.findOne({_id: fameId});
+  //   fame.fame_num = newFame;
+  //   await fame.save();
+  //   return fame.populate('authorId');
+  // }
+
+  static async addOne(userId: Types.ObjectId | string): Promise<void> {
+    const fame = new FameModel({
+      user: userId,
+      fame_num: 0
+    });
+    await fame.save(); // Saves freet to MongoDB
+  }
+
+  static async updateOne(userId: Types.ObjectId | string, newFame: number): Promise<void> {
+    const fame = await FameModel.findOne({_id: userId});
     fame.fame_num = newFame;
     await fame.save();
-    return fame.populate('authorId');
   }
+
+  static async findOne(userId: Types.ObjectId | string): Promise<HydratedDocument<Fame>> {
+    return FameModel.findOne({_id: userId}).populate('authorId');
+  }
+  
 
   // static async findOneByUserId(userId: Types.ObjectId | string): Promise<HydratedDocument<Fame>> {
   //   const fame = await FameCollection.updateOneByUserId(userId); //update first
