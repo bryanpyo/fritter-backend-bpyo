@@ -60,7 +60,7 @@ router.get(
  * @throws {413} - If the fcommentreet content is more than 140 characters long
  */
 router.post(
-  '/:originalId',
+  '/',
   [
     userValidator.isUserLoggedIn
     // commentValidator.isValidCommentContent
