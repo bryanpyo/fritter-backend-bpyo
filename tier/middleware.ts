@@ -6,7 +6,7 @@ import FameCollection from '../fame/collection';
 /**
  * Checks if fame exists for the user
  */
- const isFameExistsAlready = async (req: Request, res: Response, next: NextFunction) => {
+ const isTierExistsAlready = async (req: Request, res: Response, next: NextFunction) => {
   const validFormat = Types.ObjectId.isValid(req.params.userId);
   const user = validFormat ? await FameCollection.findOne(req.params.userId) : '';
   if (user) {
@@ -25,7 +25,7 @@ import FameCollection from '../fame/collection';
 /**
  * Checks if fame exists for the user
  */
- const isFameExists = async (req: Request, res: Response, next: NextFunction) => {
+ const isTierExists = async (req: Request, res: Response, next: NextFunction) => {
   const validFormat = Types.ObjectId.isValid(req.params.userId);
   const user = validFormat ? await FameCollection.findOne(req.params.userId) : '';
   if (user) {
@@ -62,7 +62,7 @@ import FameCollection from '../fame/collection';
 
 
 export {
-  isFameExistsAlready,
-  isFameExists,
+  isTierExistsAlready,
+  isTierExists,
   isUserExists
 };

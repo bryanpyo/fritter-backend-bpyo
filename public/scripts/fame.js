@@ -16,6 +16,12 @@ function createFame(fields){
         .then(showResponse)
         .catch(showResponse);
 }
+
+function getFame(fields){
+    fetch(`/api/fame/${fields.userId}`)
+        .then(showResponse)
+        .catch(showResponse);
+}
 //  function viewAllFreets(fields) {
 //     fetch('/api/freets')
 //       .then(showResponse)

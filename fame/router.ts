@@ -4,6 +4,7 @@ import FameCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
 import * as util from './util';
+import * as fameValidator from '../fame/middleware';
 
 import UserCollection from '../user/collection';
 
@@ -50,57 +51,6 @@ const router = express.Router();
 //   }
 // );
 
-// /**
-//  * Create a new freet.
-//  *
-//  * @name POST /api/fame
-//  *
-//  * @param {string} content - The content of the freet
-//  * @return {FreetResponse} - The created freet
-//  * @throws {403} - If the user is not logged in
-//  * @throws {400} - If the freet content is empty or a stream of empty spaces
-//  * @throws {413} - If the freet content is more than 140 characters long
-//  */
-// router.post(
-//   '/',
-//   [
-//     userValidator.isUserLoggedIn
-//   ],
-//   async (req: Request, res: Response) => {
-//     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-//     const fame = await FreetCollection.addOne(userId);
-
-//     res.status(201).json({
-//       message: 'Your fame was created successfully.'
-//     });
-//   }
-// );
-
-// /**
-//  * Delete a freet
-//  *
-//  * @name DELETE /api/freets/:id
-//  *
-//  * @return {string} - A success message
-//  * @throws {403} - If the user is not logged in or is not the author of
-//  *                 the freet
-//  * @throws {404} - If the freetId is not valid
-//  */
-// router.delete(
-//   '/:freetId?',
-//   [
-//     userValidator.isUserLoggedIn,
-//     freetValidator.isFreetExists,
-//     freetValidator.isValidFreetModifier
-//   ],
-//   async (req: Request, res: Response) => {
-//     await FreetCollection.deleteOne(req.params.freetId);
-//     res.status(200).json({
-//       message: 'Your freet was deleted successfully.'
-//     });
-//   }
-// );
-
 /**
  * Modify a freet
  *
@@ -116,23 +66,48 @@ const router = express.Router();
  */
 router.put(
   '/:userId',
-  [],
+  [fameValidator.isFameExists],
   async (req: Request, res: Response) => {
-    const user = await UserCollection.findOneByUsername(req.query.username as string); 
+    const user = await UserCollection.findOneByUserId(req.params.userId as string); 
     await FameCollection.updateOne(req.params.userId, req.body.newFame as unknown as number);
     res.status(200).json({
-      message: 'Your fame was updated successfully.',
+      message: `The fame for ${user.username} was updated successfully to ${req.body.newFame}.`,
     });
   }
 );
 
 router.post(
   '/:userId',
-  [],
+  [fameValidator.isFameExistsAlready],
   async (req: Request, res: Response) => {
     await FameCollection.addOne(req.params.userId);
     res.status(201).json({
-      message: 'Your fame was created successfully.'
+      message: `Your fame was created successfully.`
+    });
+  }
+);
+
+/**
+ * Get the fame of user
+ *
+ * @name GET /api/fame/:userId
+ *
+ * @return {number} - fame of the user
+ * @throws {400} - If authorId is not given
+ * @throws {404} - If no user has given authorId
+ *
+ */
+router.get(
+  '/:userId',
+  [
+    fameValidator.isFameExists,
+    fameValidator.isUserExists
+  ],
+  async (req: Request, res: Response) => {
+    const user = await UserCollection.findOneByUserId(req.params.userId as string); 
+    const response = await FameCollection.findOne(req.params.userId);
+    res.status(200).json({
+      message: `The fame for ${user.username} is ${response.fame_num}.`,
     });
   }
 );

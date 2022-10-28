@@ -1,3 +1,6 @@
+const { getLinterInternalSlots } = require("eslint/lib/linter/linter");
+const { createInterface } = require("readline");
+
 // Show an object on the screen.
 function showObject(obj) {
   const pre = document.getElementById('response');
@@ -42,7 +45,11 @@ const formsAndHandlers = {
   'create-comment': createComment,
   'update-fame': updateFame,
   'like-freet': likeFreet,
-  'create-fame': createFame
+  'create-fame': createFame,
+  'get-fame': getFame,
+  'create-tier': createTier,
+  'get-tier': getTier,
+  'update-tier': updateTier
 };
 
 // Attach handlers to forms

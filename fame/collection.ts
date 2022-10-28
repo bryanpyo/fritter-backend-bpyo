@@ -21,14 +21,15 @@ class FameCollection {
   }
 
   static async updateOne(userId: Types.ObjectId | string, newFame: number): Promise<void> {
-    const fame = await FameModel.findOne({_id: userId});
+    const fame = await FameModel.findOne({user: userId});
     fame.fame_num = newFame;
     await fame.save();
   }
 
   static async findOne(userId: Types.ObjectId | string): Promise<HydratedDocument<Fame>> {
-    return FameModel.findOne({_id: userId}).populate('authorId');
+    return FameModel.findOne({user: userId}).populate('user');
   }
+
   
 
   // static async findOneByUserId(userId: Types.ObjectId | string): Promise<HydratedDocument<Fame>> {
