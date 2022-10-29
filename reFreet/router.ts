@@ -51,7 +51,7 @@ router.get(
 /**
  * Create a new freet.
  *
- * @name POST /api/freets
+ * @name POST /api/refreets
  *
  * @param {string} content - The content of the freet
  * @return {FreetResponse} - The created freet

@@ -50,7 +50,7 @@ const isValidFreetModifier = async (req: Request, res: Response, next: NextFunct
   const freet = await ReFreetCollection.findOne(req.params.freetId);
   const userId = freet.authorId._id;
   if (req.session.userId !== userId.toString()) {
-    res.status(403).json({
+    res.status(414).json({
       error: 'Cannot modify other users\' freets.'
     });
     return;
