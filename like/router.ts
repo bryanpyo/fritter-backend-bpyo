@@ -3,22 +3,22 @@ import express from 'express';
 import LikeCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
+import * as likeValidator from '../like/middleware';
 import * as util from './util';
 
 const router = express.Router();
 
 router.put(
-  '/:freetId?',
+  '/:freetId',
   [
-    userValidator.isUserLoggedIn,
+    likeValidator.isUserLoggedIn,
     freetValidator.isFreetExists,
+    likeValidator.isAlreadyLiked
   ],
   async (req: Request, res: Response) => {
-    const like_giver = (req.session.userId as string) ?? '';
-    const {freetId} = req.params;
-    await LikeCollection.addOne(like_giver, freetId)
+    await LikeCollection.addOne(req.session.userId, req.params.freetId)
     res.status(200).json({
-      message: 'Your freet was updated successfully.',
+      message: 'You have liked the freet'
     });
   }
 );

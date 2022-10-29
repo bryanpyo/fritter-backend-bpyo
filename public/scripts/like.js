@@ -5,7 +5,7 @@
  */
 
 function likeFreet(fields) {
-    fetch(`/api/likes/freet/${fields.freetId}`, {method: 'PUT'})
+    fetch(`/api/likes/${fields.freetId}`, {method: 'PUT', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
     .then(showResponse)
     .catch(showResponse)
 }

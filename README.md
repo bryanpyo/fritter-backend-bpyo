@@ -145,25 +145,62 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not logged in
 
-#### `POST /api/reFreets` - Create a new reFreet
+
+
+
+#### `POST /api/refreets` - Create a new refreet
 
 **Body**
-- `id` _{string}_ - the id of the freet being reFreeted
-- `content` _{string}_ - The additional comments for the reFreet
+
+- `content` _{string}_ - The content of the refreet
 
 **Returns**
 
 - A success message
-- A object with the reFreet
 
 **Throws**
 
 - `403` if the user is not logged in
-- `400` If the freet content is empty or a stream of empty spaces and there is no image
-- `413` If the freet content is more than 140 characters long
+- `400` If the refreet content is empty or a stream of empty spaces
+- `413` If the refreet content is more than 140 characters long
 
 
-#### `PUT /api/Likes` - Add a like
+#### `GET /api/refreets` - Get all refreets
+
+**Returns**
+
+- A success message
+- All refreets
+
+#### `DELETE /api/refreets/freetId` - Delete that refreet
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `404` if freet doesn't exist
+- `414` checks if user modifying is the user that created refreet
+- `403` not logged in
+
+#### `PUT /api/refreets/freetId` - Modify reFreet
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `404` if freet doesn't exist
+- `414` checks if user modifying is the user that created refreet
+- `403` not logged in
+- `400` content must be at least one char long
+- `413` content must be no more thatn 140 chars
+
+
+
+#### `PUT /api/tiers` - modify tier
 
 **Body**
 - `id` _{string}_ - the id of the freet being liked
@@ -172,13 +209,36 @@ This renders the `index.html` file that will be used to interact with the backen
 **Returns**
 
 - A success message
-- The Freet being liked
+- The new tier
 
 **Throws**
 
 - `403` if the user is not logged in
 
-#### `PUT /api/FritterFame` - Update Fritter Fame for user
+#### `GET /api/tiers` - Get a tier
+
+**Returns**
+
+- A success message
+- The current tier
+
+**Throws**
+
+- `404` if user doesn't exist
+
+#### `POST /api/tiers` - Add a new tier
+
+**Returns**
+
+- A success message
+- The initialized tier
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if is an invalid tier
+
+#### `PUT /api/fame` - Update Fritter Fame for user
 
 **Body**
 - `user` _{string}_ - the user to update Fritter Fame
@@ -193,7 +253,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is not admin
 
-#### `PUT /api/TieredVerifications` - Update Verification Tier for user
+#### `PUT /api/tiers` - Update Verification Tier for user
 
 **Body**
 - `user` _{string}_ - the user to update Fritter Fame
@@ -203,20 +263,6 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - A success message
 - The user with their new tier
-
-**Throws**
-
-- `403` if the user is not admin
-
-#### `POST /api/PositivityBots` - Positivity Bot posts a reply
-
-**Body**
-- `id` _{string}_ - id of Freet to reply to
-
-**Returns**
-
-- A success message
-- An object with the Freet and the reply
 
 **Throws**
 

@@ -12,6 +12,8 @@
   <script src="/scripts/fame.js"></script>
   <script src="/scripts/like.js"></script>
   <script src="/scripts/tier.js"></script>
+  <script src="/scripts/reFreet.js"></script>
+  <script src="/scripts/follower.js"></script>
   <script src="/scripts/index.js"></script>
   
   
@@ -116,19 +118,6 @@
           <input type="submit" value="Create Comment">
         </form>
 
-        <form id="refreet">
-          <h3>reFreet</h3>
-          <div>
-            <label for="id">ID:</label>
-            <input id="id" name="id">
-          </div>
-          <div>
-            <label for="content">Additional Comments:</label>
-            <textarea id="content" name="content"></textarea>
-          </div>
-          <input type="submit" value="reFreet">
-        </form>
-
         <form id="edit-freet">
           <h3>Edit Freet</h3>
           <div>
@@ -149,6 +138,55 @@
             <input id="id" name="id">
           </div>
           <input type="submit" value="Delete Freet">
+        </form>
+
+        <form id="create-refreet">
+          <h3>reFreet</h3>
+          <div>
+            <label for="originalId">ID of original Freet:</label>
+            <input id="originalId" name="originalId">
+          </div>
+          <div>
+            <label for="content">Additional Comments:</label>
+            <textarea id="content" name="content"></textarea>
+          </div>
+          <input type="submit" value="reFreet">
+        </form>
+
+        <form id="edit-refreet">
+          <h3>Edit reFreet</h3>
+          <div>
+            <label for="id">ID:</label>
+            <input id="id" name="id">
+          </div>
+          <div>
+            <label for="content">Content:</label>
+            <textarea id="content" name="content"></textarea>
+          </div>
+          <input type="submit" value="Edit reFreet">
+        </form>
+
+        <form id="delete-refreet">
+          <h3>Delete reFreet</h3>
+          <div>
+            <label for="id">ID:</label>
+            <input id="id" name="id">
+          </div>
+          <input type="submit" value="Delete reFreet">
+        </form>
+        
+        <form id="view-all-refreets">
+          <h3>View All reFreets</h3>
+          <input type="submit" value="View All reFreets">
+        </form>
+
+        <form id="view-refreets-by-author">
+          <h3>View reFreets By Author</h3>
+          <div>
+            <label for="author">Author:</label>
+            <input id="author" name="author">
+          </div>
+          <input type="submit" value="View reFreets By Author">
         </form>
 
         <form id="create-fame">
@@ -188,6 +226,10 @@
             <label for="userId">User ID:</label>
             <input id="userId" name="userId">
           </div>
+          <div>
+            <label for="newTier">Initial Tier:</label>
+            <input id="newTier" name="newTier">
+          </div>
           <input type="submit" value="Create Tier">
         </form>
 
@@ -211,6 +253,24 @@
             <input id="newTier" name="newTier">
           </div>
           <input type="submit" value="Update Tier">
+        </form>
+
+        <form id="follow-user">
+          <h3>Follow</h3>
+          <div>
+            <label for="followingId">ID of person to follow:</label>
+            <input id="followingId" name="followingId">
+          </div>
+          <input type="submit" value="Follow">
+        </form>
+
+        <form id="unfollow-user">
+          <h3>Unfollow</h3>
+          <div>
+            <label for="followingId">ID of person to unfollow:</label>
+            <input id="followingId" name="followingId">
+          </div>
+          <input type="submit" value="Unfollow">
         </form>
 
         <form id="like-freet">

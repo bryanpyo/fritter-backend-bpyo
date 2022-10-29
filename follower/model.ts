@@ -7,33 +7,32 @@ import {Schema, model} from 'mongoose';
  */
 
 // Type definition for User on the backend
-export type User = {
+export type Follower = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  username: string;
-  password: string;
-  dateJoined: Date;
+  followerId: string;
+  followingId: string;
+  dateFollowed: Date;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
 // Users stored in this table will have these fields, with the
 // type given by the type property, inside MongoDB
-const UserSchema = new Schema({
+const FollowerSchema = new Schema({
   // The user's username
-  username: {
+  followerId: {
     type: String,
     required: true
   },
   // The user's password
-  password: {
+  followingId: {
     type: String,
     required: true
   },
-  // The date the user joined
-  dateJoined: {
+  dateFollowed: {
     type: Date,
     required: true
   }
 });
 
-const UserModel = model<User>('User', UserSchema);
-export default UserModel;
+const FollowerModel = model<Follower>('Follower', FollowerSchema);
+export default FollowerModel;

@@ -56,7 +56,8 @@ router.get(
  */
 router.post(
   '/:userId',
-  [tierValidator.isTierExistsAlready],
+  [tierValidator.isTierExistsAlready,
+  tierValidator.isValidTier],
   async (req: Request, res: Response) => {
     await TierCollection.addOne(req.params.userId, req.body.newTier as unknown as string);
     res.status(201).json({
@@ -80,7 +81,8 @@ router.post(
  */
 router.put(
   '/:userId',
-  [tierValidator.isTierExists],
+  [tierValidator.isTierExists,
+  tierValidator.isValidTier],
   async (req: Request, res: Response) => {
     const user = await UserCollection.findOneByUserId(req.params.userId as string); 
     await TierCollection.updateOne(req.params.userId, req.body.newTier as unknown as string);

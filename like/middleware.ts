@@ -1,6 +1,7 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import FreetCollection from '../freet/collection';
+import LikeCollection from './collection';
 
 /**
  * Checks if a freet with freetId is req.params exists
@@ -19,6 +20,23 @@ const isFreetExists = async (req: Request, res: Response, next: NextFunction) =>
 
   next();
 };
+
+/**
+ * Checks if the user is logged in, that is, whether the userId is set in session
+ */
+ const isUserLoggedIn = (req: Request, res: Response, next: NextFunction) => {
+  if (!req.session.userId) {
+    res.status(403).json({
+      error: {
+        auth: 'You must be logged in to complete this action.'
+      }
+    });
+    return;
+  }
+
+  next();
+};
+
 
 /**
  * Checks if the content of the freet in req.body is valid, i.e not a stream of empty
@@ -59,8 +77,26 @@ const isValidFreetModifier = async (req: Request, res: Response, next: NextFunct
   next();
 };
 
+const isAlreadyLiked = async (req: Request, res: Response, next: NextFunction) => {
+  const validFormat = Types.ObjectId.isValid(req.session.userId);
+  const user = validFormat ? await LikeCollection.findOne(req.session.userId, req.params.freetId) : '';
+  console.log(user);
+  if (user) {
+    res.status(400).json({
+      error: {
+        alreadyFollowing: `You have already liked the Freet with ID ${req.params.freetId}.`
+      }
+    });
+    return;
+  } else {
+    next();
+  }
+};
+
 export {
   isValidFreetContent,
   isFreetExists,
-  isValidFreetModifier
+  isValidFreetModifier,
+  isUserLoggedIn,
+  isAlreadyLiked
 };

@@ -1,6 +1,3 @@
-const { getLinterInternalSlots } = require("eslint/lib/linter/linter");
-const { createInterface } = require("readline");
-
 // Show an object on the screen.
 function showObject(obj) {
   const pre = document.getElementById('response');
@@ -49,7 +46,14 @@ const formsAndHandlers = {
   'get-fame': getFame,
   'create-tier': createTier,
   'get-tier': getTier,
-  'update-tier': updateTier
+  'update-tier': updateTier,
+  'create-refreet': createReFreet,
+  'edit-refreet': editReFreet,
+  'delete-refreet': deleteReFreet,
+  'view-all-refreets': viewAllReFreets,
+  'view-refreets-by-author': viewReFreetsByAuthor,
+  'follow-user': followUser,
+  'unfollow-user': unfollowUser
 };
 
 // Attach handlers to forms

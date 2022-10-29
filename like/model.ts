@@ -5,27 +5,20 @@ import type {PopulatedFreet} from '../freet/model';
 
 export type Like = {
   _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  like_giver: Types.ObjectId;
-  like_receiver: Types.ObjectId;
-};
-
-export type PopulatedFreetLike = {
-  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  like_giver: User;
-  like_receiver: PopulatedFreet;
+  user: Types.ObjectId;
+  liked_freet: Types.ObjectId;
 };
 
 const LikeSchema = new Schema<Like>({
-  like_giver: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  like_receiver: {
+  liked_freet: {
     type: Schema.Types.ObjectId,
-    required: true,
-    refPath: 'docModel'
-  },
+    required: true
+  }
 });
 
 const LikeModel = model<Like>('Like', LikeSchema);

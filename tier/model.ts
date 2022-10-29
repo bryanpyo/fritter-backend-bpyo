@@ -14,6 +14,12 @@ export type Tier = {
   tier: String;
 };
 
+export const TIER_TYPE = {
+  NONE: 1, 
+  SILVER: 2,
+  BLUE: 3
+}
+
 // Mongoose schema definition for interfacing with a MongoDB table
 // Freets stored in this table will have these fields, with the
 // type given by the type property, inside MongoDB

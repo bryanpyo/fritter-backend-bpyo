@@ -1,6 +1,7 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import UserCollection from '../user/collection';
+import FollowerCollection from '../follower/collection';
 
 /**
  * Checks if the current session user (if any) still exists in the database, for instance,
@@ -20,40 +21,6 @@ const isCurrentSessionUserExists = async (req: Request, res: Response, next: Nex
       });
       return;
     }
-  }
-
-  next();
-};
-
-/**
- * Checks if a username in req.body is valid, that is, it matches the username regex
- */
-const isValidUsername = (req: Request, res: Response, next: NextFunction) => {
-  const usernameRegex = /^\w+$/i;
-  if (!usernameRegex.test(req.body.username)) {
-    res.status(400).json({
-      error: {
-        username: 'Username must be a nonempty alphanumeric string.'
-      }
-    });
-    return;
-  }
-
-  next();
-};
-
-/**
- * Checks if a password in req.body is valid, that is, at 6-50 characters long without any spaces
- */
-const isValidPassword = (req: Request, res: Response, next: NextFunction) => {
-  const passwordRegex = /^\S+$/;
-  if (!passwordRegex.test(req.body.password)) {
-    res.status(400).json({
-      error: {
-        password: 'Password must be a nonempty string.'
-      }
-    });
-    return;
   }
 
   next();
@@ -81,25 +48,6 @@ const isAccountExists = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-/**
- * Checks if a username in req.body is already in use
- */
-const isUsernameNotAlreadyInUse = async (req: Request, res: Response, next: NextFunction) => {
-  const user = await UserCollection.findOneByUsername(req.body.username);
-
-  // If the current session user wants to change their username to one which matches
-  // the current one irrespective of the case, we should allow them to do so
-  if (!user || (user?._id.toString() === req.session.userId)) {
-    next();
-    return;
-  }
-
-  res.status(409).json({
-    error: {
-      username: 'An account with this username already exists.'
-    }
-  });
-};
 
 /**
  * Checks if the user is logged in, that is, whether the userId is set in session
@@ -131,6 +79,48 @@ const isUserLoggedOut = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
+
+/**
+ * Checks if a user exists
+ */
+ const isUserExists = async (req: Request, res: Response, next: NextFunction) => {
+  const validFormat = Types.ObjectId.isValid(req.params.userId);
+  const user = validFormat ? await UserCollection.findOneByUserId(req.params.userId) : '';
+  if (user) {
+    next();
+  } else {
+    res.status(404).json({
+      error: {
+
+        userAlreadyExists: `User with ID ${req.params.userId} does not exist.`
+      }
+    });
+    return;
+  }
+};
+
+
+/**
+ * Checks if the user is signed out, that is, userId is undefined in session
+ */
+const isAlreadyFollowing = async (req: Request, res: Response, next: NextFunction) => {
+  const validFormat = Types.ObjectId.isValid(req.session.userId);
+  const user = validFormat ? await FollowerCollection.findOne(req.session.userId, req.params.followingId) : '';
+
+  if (user) {
+    res.status(400).json({
+      error: {
+        alreadyFollowing: `You are alrady following the User with ID ${req.params.followingId}.`
+      }
+    });
+    return;
+    
+  } else {
+    next();
+  }
+};
+
+
 /**
  * Checks if a user with userId as author id in req.query exists
  */
@@ -153,13 +143,31 @@ const isAuthorExists = async (req: Request, res: Response, next: NextFunction) =
   next();
 };
 
+/**
+ * Checks if a user with userId as author id in req.query exists
+ */
+ const isNotFollowing = async (req: Request, res: Response, next: NextFunction) => {
+  const validFormat = Types.ObjectId.isValid(req.session.userId);
+  const user = validFormat ? await FollowerCollection.findOne(req.session.userId, req.params.followingId) : '';
+
+  if (user) {
+    next();
+  } else {
+    res.status(400).json({
+      error: {
+        alreadyFollowing: `You are alrady not following the User with ID ${req.params.followingId}.`
+      }
+    });
+    return;
+  }
+};
+
 export {
   isCurrentSessionUserExists,
   isUserLoggedIn,
   isUserLoggedOut,
-  isUsernameNotAlreadyInUse,
+  isAlreadyFollowing,
   isAccountExists,
   isAuthorExists,
-  isValidUsername,
-  isValidPassword
+  isNotFollowing
 };

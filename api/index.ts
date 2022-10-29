@@ -15,6 +15,8 @@ import {commentRouter} from '../comment/router'
 import {fameRouter} from '../fame/router'
 import {likeRouter} from '../like/router';
 import {tierRouter} from '../tier/router';
+import {reFreetRouter} from '../reFreet/router';
+import {followerRouter} from '../follower/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -84,6 +86,8 @@ app.use('/api/comments', commentRouter);
 app.use('/api/fame', fameRouter);
 app.use('/api/likes', likeRouter);
 app.use('/api/tiers', tierRouter);
+app.use('/api/refreets', reFreetRouter);
+app.use('/api/followers', followerRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

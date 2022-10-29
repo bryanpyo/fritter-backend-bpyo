@@ -4,20 +4,17 @@ import LikeModel from './model';
 import UserCollection from '../user/collection';
 
 class LikeCollection {
-  /**
-   * Add a freet to the collection
-   *
-   * @param {string} authorId - The id of the author of the freet
-   * @param {string} content - The id of the content of the freet
-   * @return {Promise<HydratedDocument<Freet>>} - The newly created freet
-   */
-  static async addOne(like_giver: Types.ObjectId | string, like_receiver: Types.ObjectId | string): Promise<boolean> {
+  static async addOne(user: Types.ObjectId | string, liked_freet: Types.ObjectId | string): Promise<HydratedDocument<Like>> {
     const like = new LikeModel({
-      like_giver,
-      like_receiver
+      user: user,
+      liked_freet: liked_freet
     });
     await like.save(); // Saves freet to MongoDB
-    return like !== null;
+    return like.populate('user');
+  }
+
+  static async findOne(user: Types.ObjectId | string, liked_freet: Types.ObjectId | string): Promise<HydratedDocument<Like>> {
+    return LikeModel.findOne({user: user, liked_freet: liked_freet}).populate('user');
   }
 }
 
